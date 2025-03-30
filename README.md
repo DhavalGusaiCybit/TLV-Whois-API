@@ -9,7 +9,7 @@ This project is a Whois Lookup Tool that fetches domain information using an API
 - Alpine.js (Reactive UI)  
 - Node.js (API Backend)  
 
- 📅 Installation & Setup  
+ 📅 Installation & Setup
 1. Clone the repository:  
    ```bash
    git init
