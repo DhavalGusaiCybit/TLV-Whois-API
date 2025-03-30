@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Whois Lookup</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js"></script>
+    <style>
+        @keyframes motion {
+            0% {
+                transform: translateX(0) scale(1);
+            }
+            25% {
+                transform: translateX(-50px) scale(0.3);
+            }
+            50% {
+                transform: translateX(0) scale(1);
+            }
+            75% {
+                transform: translateX(50px) scale(0.3);
+            }
+            100% {
+                transform: translateX(0) scale(1);
+            }
+        }
+        @keyframes fill {
+            50%   { 
+                width: 100%;
+            }
+            100%  {
+                width: 0%;
+            }
+        }
+        .text-fill:before {
+            content: attr(data-text);
+            position: absolute;
+            overflow: hidden;
+            white-space: nowrap;
+            width: 0;
+            color: #509BD9;
+            animation: fill 2s infinite;
+        }
+    </style>
+</head>
+<body class="bg-gray-100 flex items-center justify-center p-3 h-auto sm:h-screen">
+    <div class="flex justify-center items-center flex-col w-auto max-h-auto overflow-y-auto" x-data="whoisLookup()">
+        <div class="bg-white p-3 sm:p-4 rounded-lg shadow-lg max-w-[95%] sm:max-w-md w-full text-center">
+            <h1 class="text-xl sm:text-2xl font-bold mb-4 sm:mb-2 text-gray-700">Whois Domain Lookup</h1>
+
+            <input type="text" x-model="domain" class="w-full p-2 border rounded-lg mb-3" placeholder="Enter domain name">
+
+            <button @click="fetchWhois" class="w-full bg-blue-500 hover:bg-blue-600 text-white py-2 rounded-lg">
+                Lookup
+            </button>
+
+            <div x-show="loading" class="my-4 w-full h-[100px] text-gray-500 relative flex justify-center">
+                <div class="w-[100px] h-[50px] absolute text-center m-auto inset-0">
+                    <div class="w-5 h-5 rotate-45 bg-[#509BD9] inline-block animate-[motion_3s_cubic-bezier(.07,0.5,0.53,0.88)_infinite] opacity-70 rounded-[50%]"></div>
+                    <p class="text-fill text-xl relative inline-block text-neutral-300 mt-2.5" data-text="Fetching...">Fetching...</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="bg-white p-3 sm:p-4 rounded-lg shadow-lg max-w-[95%] sm:max-w-auto w-full mt-4 text-center" x-show="dataFetched">
+            
+            <select x-model="infoType" @change="updateResult" class="w-auto p-2 border rounded-lg max-sm:mb-3">
+                <option value="domain">Domain Information</option>
+                <option value="contact">Contact Information</option>
+            </select>            
+
+            <div x-html="result" class="mt-4 text-gray-700"></div>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
